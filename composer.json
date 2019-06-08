@@ -1,0 +1,22 @@
+{
+    "name": "ivan770/laravel-httpclient",
+    "description": "Symfony HttpClient <3 Laravel",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "symfony/http-client": "^4.3",
+        "illuminate/support": "^5.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ivan770\\HttpClient\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "HttpClient": "Ivan770\\HttpClient\\HttpClient"
+            }
+        }
+    }
+}
