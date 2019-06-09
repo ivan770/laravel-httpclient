@@ -14,7 +14,7 @@ use Symfony\Component\HttpClient\HttpClient as Client;
  */
 class HttpClient
 {
-    use Requestable, Macroable {
+    use Buildable, Requestable, Macroable {
         Macroable::__call as macroCall;
     }
 

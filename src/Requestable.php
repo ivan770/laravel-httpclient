@@ -19,7 +19,9 @@ trait Requestable
 
     protected function callRequestMethod($name, $arguments)
     {
-        $response = $this->client->request(strtoupper($name), $arguments[0], $arguments[1] ?? []);
+        $this->applyRequestOptions($arguments[1] ?? []);
+        $request = $this->returnAndResetBuilderState();
+        $response = $this->client->request(strtoupper($name), $arguments[0], $request);
         return new Response($response);
     }
 }
