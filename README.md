@@ -37,6 +37,12 @@ $client->json(["key" => "value"])->post("https://example.com")
 // Add custom headers to request
 $client->headers(["key" => "value"])->get("https://example.com");
 
+// Ignore redirects
+$client->withoutRedirects()->get("https://example.com");
+
+// Proxy
+$client->proxy("https://hostname:8080")->get("https://example.com");
+
 // Authentication
 $client->auth("auth_basic", ["username", "password"])->get("https://example.com");
 $client->authBasic(["username", "password"])->get("https://example.com");
