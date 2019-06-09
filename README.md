@@ -13,6 +13,7 @@ public function method(HttpClient $client)
 You can also use [Symfony HttpClient documentation](https://symfony.com/doc/current/components/http_client.html)
 ```php
 $response = $client->get("https://example.com");
+$response = $client->get("https://example.com", ["query" => ["key" => "value"]]);
 $response->getContent(); // Get response body
 $response->toCollection(); // Transform JSON response to collection
 $response->getStatusCode(); // Get response status code
