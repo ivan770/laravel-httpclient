@@ -2,6 +2,8 @@
 
 namespace Ivan770\HttpClient;
 
+use Symfony\Component\HttpClient\Exception\JsonException;
+
 class Response
 {
     protected $baseResponse;
@@ -19,6 +21,15 @@ class Response
     public function toCollection()
     {
         return collect($this->baseResponse->toArray());
+    }
+
+    public function getContent($throw = true)
+    {
+        try {
+            return $this->toCollection();
+        } catch (JsonException $exception) {
+            return $this->baseResponse->getContent($throw);
+        }
     }
 
     public function __call($name, $arguments)

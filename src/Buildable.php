@@ -46,4 +46,22 @@ trait Buildable
         $this->applyRequestOptions(["headers" => $headers]);
         return $this;
     }
+
+    public function body($body)
+    {
+        $this->applyRequestOptions(["body" => $body]);
+        return $this;
+    }
+
+    public function json($json)
+    {
+        $this->applyRequestOptions(["json" => $json]);
+        return $this;
+    }
+
+    public function query($query)
+    {
+        $this->applyRequestOptions(["query" => $query]);
+        return $this;
+    }
 }

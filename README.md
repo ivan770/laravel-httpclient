@@ -14,7 +14,7 @@ You can also use [Symfony HttpClient documentation](https://symfony.com/doc/curr
 ```php
 $response = $client->get("https://example.com");
 $response = $client->get("https://example.com", ["query" => ["key" => "value"]]);
-$response->getContent(); // Get response body
+$response->getContent(); // Get response body, or collection, if response is JSON
 $response->toCollection(); // Transform JSON response to collection
 $response->getStatusCode(); // Get response status code
 $response->getHeaders(); // Get response headers
@@ -29,9 +29,16 @@ $client->delete("https://example.com");
 ### Request builder
 You can send your request parameters directly to client methods, but you can also use fluent request builder.
 ```php
+// Add data to request
+$client->query(["key" => "value"])->get("https://example.com")
+$client->body(["key" => "value"])->post("https://example.com")
+$client->json(["key" => "value"])->post("https://example.com")
+
 // Add custom headers to request
 $client->headers(["key" => "value"])->get("https://example.com");
+
 // Authentication
 $client->auth("auth_basic", ["username", "password"])->get("https://example.com");
 $client->authBasic(["username", "password"])->get("https://example.com");
 $client->authBearer("tokenhere")->get("https://example.com");
+```
