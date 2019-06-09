@@ -1,6 +1,6 @@
 <?php
 
-namespace Ivan770\HttpClient;
+namespace Ivan770\HttpClient\Traits;
 
 trait Buildable
 {

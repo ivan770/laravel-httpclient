@@ -3,6 +3,9 @@
 namespace Ivan770\HttpClient;
 
 use Illuminate\Support\Traits\Macroable;
+use Ivan770\HttpClient\Traits\Buildable;
+use Ivan770\HttpClient\Traits\InteractsWithEloquent;
+use Ivan770\HttpClient\Traits\Requestable;
 use Symfony\Component\HttpClient\HttpClient as Client;
 
 /**
@@ -14,7 +17,7 @@ use Symfony\Component\HttpClient\HttpClient as Client;
  */
 class HttpClient
 {
-    use Buildable, Requestable, Macroable {
+    use InteractsWithEloquent, Buildable, Requestable, Macroable {
         Macroable::__call as macroCall;
     }
 

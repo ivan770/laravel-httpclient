@@ -7,6 +7,9 @@
         "symfony/http-client": "^4.3",
         "illuminate/support": "^5.8"
     },
+    "suggest": {
+        "illuminate/database": "Allows to send request with data from model"
+    },
     "autoload": {
         "psr-4": {
             "Ivan770\\HttpClient\\": "src/"

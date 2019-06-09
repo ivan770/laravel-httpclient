@@ -1,6 +1,8 @@
 <?php
 
-namespace Ivan770\HttpClient;
+namespace Ivan770\HttpClient\Traits;
+
+use Ivan770\HttpClient\Response;
 
 trait Requestable
 {
