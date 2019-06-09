@@ -107,4 +107,28 @@ trait Buildable
         $this->applyRequestOptions(["query" => $query]);
         return $this;
     }
+
+    /**
+     * Ignore all redirects for this request
+     *
+     * @return $this
+     */
+    public function withoutRedirects()
+    {
+        $this->applyRequestOptions(["max_redirects" => 0]);
+        return $this;
+    }
+
+    /**
+     * Change proxy for this request
+     *
+     * @param string $proxy Proxy value for CURLOPT_PROXY
+     * @param string $noproxy Comma-separated list of hosts, that do not require proxy
+     * @return $this
+     */
+    public function proxy($proxy = null, $noproxy = null)
+    {
+        $this->applyRequestOptions(["proxy" => $proxy, "no_proxy" => $noproxy]);
+        return $this;
+    }
 }
