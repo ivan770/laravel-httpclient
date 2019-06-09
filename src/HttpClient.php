@@ -6,11 +6,11 @@ use Illuminate\Support\Traits\Macroable;
 use Symfony\Component\HttpClient\HttpClient as Client;
 
 /**
- * @method get(string $url, array $arguments) Send a GET request
- * @method head(string $url, array $arguments) Send a HEAD request
- * @method post(string $url, array $arguments) Send a POST request
- * @method put(string $url, array $arguments) Send a PUT request
- * @method delete(string $url, array $arguments) Send a DELETE request
+ * @method Response get(string $url, array $arguments) Send a GET request
+ * @method Response head(string $url, array $arguments) Send a HEAD request
+ * @method Response post(string $url, array $arguments) Send a POST request
+ * @method Response put(string $url, array $arguments) Send a PUT request
+ * @method Response delete(string $url, array $arguments) Send a DELETE request
  */
 class HttpClient
 {
