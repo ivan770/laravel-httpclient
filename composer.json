@@ -8,7 +8,8 @@
         "illuminate/support": "^5.8"
     },
     "suggest": {
-        "illuminate/database": "Allows to send request with data from model"
+        "illuminate/database": "Allows to send request with data from model",
+        "illuminate/pipeline": "Allows to send response data through pipelines"
     },
     "autoload": {
         "psr-4": {
