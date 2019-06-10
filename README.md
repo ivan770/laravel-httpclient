@@ -57,3 +57,23 @@ $client->setModel($model)->fetchModel()->post("https://example.com");
 // You can also use short variant
 $client->fetchModel($model)->post("https://example.com");
 ```
+
+### Data pipelining
+If `illuminate/pipeline` is installed, you can send your data through pipelines.
+If not, you can still pass your data to [Closure](https://www.php.net/manual/en/class.closure.php)
+```php
+$response = $client->get("https://example.com");
+
+// Pass data to Closure
+$response->then(function ($data) {
+    return $data;
+});
+
+// Use Laravel pipelines
+$pipes = [
+    ExamplePipe::class
+];
+$response->pipeline()->through($pipes)->then(function ($data) {
+    return $data;
+});
+```
