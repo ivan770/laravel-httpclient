@@ -4,6 +4,7 @@ namespace Ivan770\HttpClient;
 
 use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
 use Symfony\Component\HttpClient\Exception\JsonException;
+use Illuminate\Container\Container;
 use Illuminate\Pipeline\Pipeline;
 
 /**
@@ -17,6 +18,8 @@ class Response
     protected $baseResponse;
 
     protected $pipeline;
+
+    protected $container;
 
     public function __construct($baseResponse)
     {
@@ -32,10 +35,18 @@ class Response
         throw new PipelineNotAvailable("Pipeline class cannot be found");
     }
 
+    protected function getContainer()
+    {
+        if (function_exists("app")) {
+            $this->container = app();
+        }
+        return $this->container;
+    }
+
     protected function getPipeline()
     {
         if ($this->pipelineAvailable() && is_null($this->pipeline)) {
-            $this->pipeline = new Pipeline();
+            $this->pipeline = new Pipeline($this->getContainer());
         }
         return $this->pipeline;
     }

@@ -9,7 +9,8 @@
     },
     "suggest": {
         "illuminate/database": "Allows to send request with data from model",
-        "illuminate/pipeline": "Allows to send response data through pipelines"
+        "illuminate/pipeline": "Allows to send response data through pipelines",
+        "illuminate/container": "Required to use pipelines"
     },
     "autoload": {
         "psr-4": {
