@@ -5,6 +5,7 @@ namespace Ivan770\HttpClient;
 use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
 use Symfony\Component\HttpClient\Exception\JsonException;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
 use Illuminate\Pipeline\Pipeline;
 
 /**
@@ -28,7 +29,6 @@ class Response
 
     protected function pipelineAvailable()
     {
-        //TODO: Remove pipeline vendor lock.
         if (class_exists(Pipeline::class)) {
             return true;
         }
@@ -45,7 +45,10 @@ class Response
 
     protected function getPipeline()
     {
-        if ($this->pipelineAvailable() && is_null($this->pipeline)) {
+        if ($this->getContainer()->bound(PipelineContract::class)) {
+            $this->pipeline = $this->getContainer()->make(PipelineContract::class);
+        }
+        if (is_null($this->pipeline) && $this->pipelineAvailable()) {
             $this->pipeline = new Pipeline($this->getContainer());
         }
         return $this->pipeline;
