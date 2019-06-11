@@ -37,8 +37,8 @@ class Response
 
     protected function getContainer()
     {
-        if (function_exists("app")) {
-            $this->container = app();
+        if (is_null($this->container) && class_exists(Container::class)) {
+            $this->container = Container::getInstance();
         }
         return $this->container;
     }
