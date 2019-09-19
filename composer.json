@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "symfony/http-client": "^4.3",
-        "illuminate/support": "^5.8"
+        "illuminate/support": "^5.8|^6.0|^7.0"
     },
     "suggest": {
         "illuminate/database": "Allows to send request with data from model",
