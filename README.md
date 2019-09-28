@@ -26,6 +26,41 @@ $client->post("https://example.com", ["json" => ["key" => "value"]]);
 $client->put("https://example.com");
 $client->delete("https://example.com");
 ```
+### Using Request class
+HttpClient provides ability to create "request classes".
+```php
+<?php
+
+use Ivan770\HttpClient\Request;
+use Ivan770\HttpClient\HttpClient;
+
+class HttpBinGet extends Request
+{
+    // Request URL
+    protected $resource = "https://httpbin.org/get";
+
+    // Request method
+    protected $method = "GET";
+
+    // This method is called on request execution.
+    // Here, you are able to use builder to modify your request
+    protected function defaultAttach(HttpClient $client)
+    {
+	$client->authBearer("test");
+    }
+}
+
+// Execute request
+app(HttpBinGet::class)->execute();
+
+// Execute request and receive result
+app(HttpBinGet::class)->get();
+
+// Modify request using "attach" method.
+app(HttpBinGet::class)->attach(function (HttpClient $client) {
+    $client->headers(["test" => true]);
+})->execute();
+```
 ### Request builder
 You can send your request parameters directly to client methods, but you can also use fluent request builder.
 ```php
