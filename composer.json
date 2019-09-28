@@ -10,7 +10,8 @@
     "suggest": {
         "illuminate/database": "Allows to send request with data from model",
         "illuminate/pipeline": "Allows to send response data through pipelines",
-        "illuminate/container": "Required to use pipelines"
+        "illuminate/container": "Required to use pipelines",
+        "illuminate/console": "Required to create requests with artisan"
     },
     "autoload": {
         "psr-4": {
@@ -21,7 +22,10 @@
         "laravel": {
             "aliases": {
                 "HttpClient": "Ivan770\\HttpClient\\HttpClient"
-            }
+            },
+            "providers": [
+                "Ivan770\\HttpClient\\ServiceProvider"
+            ]
         }
     }
 }

@@ -1,0 +1,12 @@
+<?php
+
+namespace DummyNamespace;
+
+use Ivan770\HttpClient\Request;
+
+class DummyClass extends Request
+{
+    protected $resource = DummyURL;
+
+    protected $method = DummyMethod;
+}
