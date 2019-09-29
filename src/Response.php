@@ -87,7 +87,7 @@ class Response implements ResponseContract
      */
     public function then($function)
     {
-        return $function->call($this, $this->getContent());
+        return $function($this->getContent());
     }
 
     /**

@@ -67,6 +67,16 @@ abstract class Request implements RequestContract
     }
 
     /**
+     * Request tests
+     *
+     * @return array
+     */
+    protected function tests()
+    {
+        return [];
+    }
+
+    /**
      * Attach builder properties. HttpClient instance is passed into Closure
      *
      * @param \Closure $callback
@@ -77,6 +87,17 @@ abstract class Request implements RequestContract
         $callback($this->client);
 
         return $this;
+    }
+
+    /**
+     * Get test response
+     *
+     * @param $test
+     * @return mixed
+     */
+    public function mock($test)
+    {
+        return $this->tests()[$test];
     }
 
     /**
