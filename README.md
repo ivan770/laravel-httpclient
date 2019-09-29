@@ -33,6 +33,7 @@ HttpClient provides ability to create "request classes".
 
 use Ivan770\HttpClient\Request;
 use Ivan770\HttpClient\HttpClient;
+use Ivan770\HttpClient\MockResponse;
 
 class HttpBinGet extends Request
 {
@@ -48,6 +49,12 @@ class HttpBinGet extends Request
     {
 	$client->authBearer("test");
     }
+
+    protected function tests(){
+        return [
+            "success" => MockResponse::make("Hello World!"),
+        ];
+    }
 }
 
 // Execute request
@@ -60,6 +67,13 @@ app(HttpBinGet::class)->get();
 app(HttpBinGet::class)->attach(function (HttpClient $client) {
     $client->headers(["test" => true]);
 })->execute();
+
+// Mock responses
+$response = app(HttpBinGet::class)->mock("success");
+
+$response->getContent(); // "Hello World!"
+$response->getStatus(); // 200
+$response->getHeaders(); // []
 ```
 ### Request builder
 You can send your request parameters directly to client methods, but you can also use fluent request builder.
