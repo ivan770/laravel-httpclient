@@ -7,6 +7,7 @@ use Symfony\Component\HttpClient\Exception\JsonException;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
 use Illuminate\Pipeline\Pipeline;
+use Ivan770\HttpClient\Contracts\Response as ResponseContract;
 
 /**
  * @method int getStatusCode() Get response status code
@@ -14,7 +15,7 @@ use Illuminate\Pipeline\Pipeline;
  * @method array toArray(bool $throw = true) Get array from response
  * @method array|mixed|null getInfo(string $type = null) Get info from transport layer
  */
-class Response
+class Response implements ResponseContract
 {
     protected $baseResponse;
 

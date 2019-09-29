@@ -3,8 +3,9 @@
 
 namespace Ivan770\HttpClient;
 
+use Ivan770\HttpClient\Contracts\Request as RequestContract;
 
-abstract class Request
+abstract class Request implements RequestContract
 {
     /**
      * HttpClient instance
