@@ -3,29 +3,62 @@
 namespace Ivan770\HttpClient;
 
 use Illuminate\Support\Traits\Macroable;
-use Ivan770\HttpClient\Traits\Buildable;
 use Ivan770\HttpClient\Traits\InteractsWithEloquent;
 use Ivan770\HttpClient\Traits\Requestable;
 use Symfony\Component\HttpClient\HttpClient as Client;
 
 /**
+ * @method HttpClient auth(string $type, array|string $credentials) Authentication credentials
+ * @method HttpClient authBasic(array|string $credentials) Add HTTP basic auth to request
+ * @method HttpClient authBearer(string $credentials) Add Bearer token to request
+ * @method HttpClient headers(array $headers) Add headers to request
+ * @method HttpClient body(array|string|resource|\Traversable|\Closure $body) Add body to request
+ * @method HttpClient json(array|\JsonSerializable $json) Add JSON to request
+ * @method HttpClient query(array $query) Add query string values to request
+ * @method HttpClient withoutRedirects() Ignore all redirects for this request
+ * @method HttpClient proxy(string $proxy, string $noproxy) Change proxy for this request
  * @method Response get(string $url, array $arguments = []) Send a GET request
  * @method Response head(string $url, array $arguments = []) Send a HEAD request
  * @method Response post(string $url, array $arguments = []) Send a POST request
  * @method Response put(string $url, array $arguments = []) Send a PUT request
  * @method Response delete(string $url, array $arguments = []) Send a DELETE request
+ * @method Response connect(string $url, array $arguments = []) Send a CONNECT request
+ * @method Response options(string $url, array $arguments = []) Send a OPTIONS request
+ * @method Response trace(string $url, array $arguments = []) Send a TRACE request
+ * @method Response patch(string $url, array $arguments = []) Send a PATCH request
+ *
+ * @see Builder
  */
 class HttpClient
 {
-    use InteractsWithEloquent, Buildable, Requestable, Macroable {
+    use InteractsWithEloquent, Requestable, Macroable {
         Macroable::__call as macroCall;
     }
 
+    /**
+     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
+     */
     protected $client;
 
-    public function __construct(Client $client, $clientArgs = [])
+    /**
+     * @var Builder
+     */
+    protected $builder;
+
+    public function __construct(Client $client, Builder $builder, $clientArgs = [])
     {
         $this->client = $client->create($clientArgs);
+        $this->builder = $builder;
+    }
+
+    /**
+     * Get builder instance
+     *
+     * @return Builder
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
     }
 
     public function __call($name, $arguments)
@@ -36,6 +69,12 @@ class HttpClient
 
         if ($this->isRequestMethod($name)) {
             return $this->callRequestMethod($name, $arguments);
+        }
+
+        if(method_exists($this->builder, $name)) {
+            $this->builder->$name(...$arguments);
+
+            return $this;
         }
 
         return $this->client->$name(...$arguments);

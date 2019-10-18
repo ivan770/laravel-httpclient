@@ -5,6 +5,19 @@ namespace Ivan770\HttpClient;
 
 use Ivan770\HttpClient\Contracts\Request as RequestContract;
 
+/**
+ * @method RequestContract auth(string $type, array|string $credentials) Authentication credentials
+ * @method RequestContract authBasic(array|string $credentials) Add HTTP basic auth to request
+ * @method RequestContract authBearer(string $credentials) Add Bearer token to request
+ * @method RequestContract headers(array $headers) Add headers to request
+ * @method RequestContract body(array|string|resource|\Traversable|\Closure $body) Add body to request
+ * @method RequestContract json(array|\JsonSerializable $json) Add JSON to request
+ * @method RequestContract query(array $query) Add query string values to request
+ * @method RequestContract withoutRedirects() Ignore all redirects for this request
+ * @method RequestContract proxy(string $proxy, string $noproxy) Change proxy for this request
+ *
+ * @see Builder
+ */
 abstract class Request implements RequestContract
 {
     /**
@@ -34,6 +47,8 @@ abstract class Request implements RequestContract
     public function __construct(HttpClient $client)
     {
         $this->client = $client;
+
+        $this->defaultAttach($this->client);
     }
 
     /**
@@ -107,8 +122,6 @@ abstract class Request implements RequestContract
      */
     public function execute()
     {
-        $this->defaultAttach($this->client);
-
         $method = $this->getMethod();
 
         return $this->client->$method($this->getResource());
@@ -122,5 +135,12 @@ abstract class Request implements RequestContract
     public function get()
     {
         return $this->execute()->getContent();
+    }
+
+    public function __call($name, $arguments)
+    {
+        $this->client->$name(...$arguments);
+
+        return $this;
     }
 }

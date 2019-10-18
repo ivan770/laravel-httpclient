@@ -1,26 +1,42 @@
 <?php
 
-namespace Ivan770\HttpClient\Traits;
+namespace Ivan770\HttpClient;
 
-trait Buildable
+class Builder
 {
+    /**
+     * Request options, that will be passed to Symfony HttpClient
+     *
+     * @var array
+     */
     protected $request = [];
 
-    protected function applyRequestOptions($options)
+    /**
+     * Apply request options to current builder
+     *
+     * @param $options
+     */
+    public function applyRequestOptions($options)
     {
         $this->request = array_merge($this->request, $options);
     }
 
-    protected function resetBuilderState()
+    /**
+     * Reset request options
+     */
+    public function resetRequest()
     {
         $this->request = [];
     }
 
-    protected function returnAndResetBuilderState()
+    /**
+     * Get request options
+     *
+     * @return array
+     */
+    public function getRequest()
     {
-        $request = $this->request;
-        $this->resetBuilderState();
-        return $request;
+        return $this->request;
     }
 
     /**
