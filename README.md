@@ -43,7 +43,7 @@ class HttpBinGet extends Request
     // Request method
     protected $method = "GET";
 
-    // This method is called on request execution.
+    // This method is called on request init.
     // Here, you are able to use builder to modify your request
     protected function defaultAttach(HttpClient $client)
     {
@@ -67,6 +67,9 @@ app(HttpBinGet::class)->get();
 app(HttpBinGet::class)->attach(function (HttpClient $client) {
     $client->headers(["test" => true]);
 })->execute();
+
+// Request also forwards calls to Builder
+app(HttpBinGet::class)->headers(["test" => true])->execute();
 
 // Mock responses
 $response = app(HttpBinGet::class)->mock("success");
