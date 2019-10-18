@@ -68,7 +68,7 @@ app(HttpBinGet::class)->attach(function (HttpClient $client) {
     $client->headers(["test" => true]);
 })->execute();
 
-// Request also forwards calls to Builder
+// Request also forwards calls to HttpClient
 app(HttpBinGet::class)->headers(["test" => true])->execute();
 
 // Mock responses
