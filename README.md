@@ -31,8 +31,8 @@ HttpClient provides ability to create "request classes".
 ```php
 <?php
 
-use Ivan770\HttpClient\Request\Request;
 use Ivan770\HttpClient\HttpClient;
+use Ivan770\HttpClient\Request\Request;
 use Ivan770\HttpClient\Response\MockResponse;
 
 class HttpBinGet extends Request
@@ -77,6 +77,23 @@ $response = app(HttpBinGet::class)->mock("success");
 $response->getContent(); // "Hello World!"
 $response->getStatus(); // 200
 $response->getHeaders(); // []
+```
+### BrowserKit usage
+```php
+<?php
+
+use Ivan770\HttpClient\Request\Request;
+use Ivan770\HttpClient\Contracts\PassToBrowserKit;
+
+// Just implement PassToBrowserKit contract to start using BrowserKit
+class HttpBinGet extends Request implements PassToBrowserKit
+{
+    // Request URL
+    protected $resource = "https://httpbin.org/get";
+
+    // Request method
+    protected $method = "GET";
+}
 ```
 ### Request builder
 You can send your request parameters directly to client methods, but you can also use fluent request builder.
