@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Ivan770\HttpClient;
+namespace Ivan770\HttpClient\Response;
 
 use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
 use Illuminate\Pipeline\Pipeline;
@@ -10,7 +9,6 @@ use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Contracts\Response;
 use Ivan770\HttpClient\Exceptions\DataIsNotCollection;
 use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
-
 
 class MockResponse implements Response
 {

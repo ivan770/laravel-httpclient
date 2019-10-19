@@ -2,7 +2,7 @@
 
 namespace Ivan770\HttpClient\Traits;
 
-use Ivan770\HttpClient\Response;
+use Ivan770\HttpClient\Response\Response;
 
 trait Requestable
 {

@@ -1,7 +1,8 @@
 <?php
 
-namespace Ivan770\HttpClient;
+namespace Ivan770\HttpClient\Request;
 
+use Ivan770\HttpClient\HttpClient;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -49,7 +50,6 @@ abstract class BrowserKitRequest
     /**
      * Request resource via BrowserKit
      *
-     * @param HttpClient $client
      * @param $resource
      * @param $name
      * @return Crawler

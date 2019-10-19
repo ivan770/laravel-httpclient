@@ -1,7 +1,8 @@
 <?php
 
-namespace Ivan770\HttpClient;
+namespace Ivan770\HttpClient\Response;
 
+use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
 use Symfony\Component\HttpClient\Exception\JsonException;
 use Illuminate\Container\Container;
@@ -58,7 +59,7 @@ class Response implements ResponseContract
     /**
      * Create collection from response
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function toCollection()
     {
@@ -69,7 +70,7 @@ class Response implements ResponseContract
      * Get body of response, or collection, if response is JSON-compatible
      *
      * @param bool $throw
-     * @return \Illuminate\Support\Collection|string
+     * @return Collection|string
      */
     public function getContent($throw = true)
     {
@@ -84,6 +85,7 @@ class Response implements ResponseContract
      * Pass response content to function
      *
      * @param \Closure $function Function to call
+     * @return mixed
      */
     public function then($function)
     {

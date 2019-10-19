@@ -1,11 +1,13 @@
 <?php
 
 
-namespace Ivan770\HttpClient;
+namespace Ivan770\HttpClient\Request;
 
 use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Contracts\PassToBrowserKit;
 use Ivan770\HttpClient\Contracts\Request as RequestContract;
+use Ivan770\HttpClient\HttpClient;
+use Ivan770\HttpClient\Response\Response;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\DomCrawler\Crawler;
@@ -137,7 +139,7 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     /**
      * Run request
      *
-     * @return Response|Crawler
+     * @return \Ivan770\HttpClient\Response\Response|Crawler
      */
     public function execute()
     {

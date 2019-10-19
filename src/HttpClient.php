@@ -3,9 +3,11 @@
 namespace Ivan770\HttpClient;
 
 use Illuminate\Support\Traits\Macroable;
+use Ivan770\HttpClient\Response\Response;
 use Ivan770\HttpClient\Traits\InteractsWithEloquent;
 use Ivan770\HttpClient\Traits\Requestable;
 use Symfony\Component\HttpClient\HttpClient as Client;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @method HttpClient auth(string $type, array|string $credentials) Authentication credentials
@@ -36,7 +38,7 @@ class HttpClient
     }
 
     /**
-     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
+     * @var HttpClientInterface
      */
     protected $client;
 
@@ -64,7 +66,7 @@ class HttpClient
     /**
      * Get Symfony HttpClient instance
      *
-     * @return \Symfony\Contracts\HttpClient\HttpClientInterface
+     * @return HttpClientInterface
      */
     public function getSymfonyClient()
     {

@@ -31,9 +31,9 @@ HttpClient provides ability to create "request classes".
 ```php
 <?php
 
-use Ivan770\HttpClient\Request;
+use Ivan770\HttpClient\Request\Request;
 use Ivan770\HttpClient\HttpClient;
-use Ivan770\HttpClient\MockResponse;
+use Ivan770\HttpClient\Response\MockResponse;
 
 class HttpBinGet extends Request
 {

@@ -3,7 +3,7 @@
 
 namespace Ivan770\HttpClient\Contracts;
 
-use Ivan770\HttpClient\Response;
+use Ivan770\HttpClient\Response\Response;
 
 interface Request
 {
