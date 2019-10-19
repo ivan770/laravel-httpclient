@@ -31,13 +31,6 @@ abstract class BrowserKitRequest
     protected $cookieJar;
 
     /**
-     * Enable Symfony BrowserKit support
-     *
-     * @var bool
-     */
-    protected $enableBrowserKit = false;
-
-    /**
      * Create BrowserKit instance on current HttpClient instance
      *
      * @param HttpClient $client

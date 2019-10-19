@@ -3,9 +3,12 @@
 
 namespace Ivan770\HttpClient;
 
+use Illuminate\Support\Collection;
+use Ivan770\HttpClient\Contracts\PassToBrowserKit;
 use Ivan770\HttpClient\Contracts\Request as RequestContract;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @method RequestContract auth(string $type, array|string $credentials) Authentication credentials
@@ -54,13 +57,23 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     }
 
     /**
+     * Should request use BrowserKit
+     *
+     * @return bool
+     */
+    protected function browserKit()
+    {
+        return $this instanceof PassToBrowserKit;
+    }
+
+    /**
      * Method getter
      *
      * @return string
      */
     protected function getMethod()
     {
-        if($this->enableBrowserKit) {
+        if($this->browserKit()) {
             return strtoupper($this->method);
         }
 
@@ -124,13 +137,13 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     /**
      * Run request
      *
-     * @return Response|\Symfony\Component\DomCrawler\Crawler
+     * @return Response|Crawler
      */
     public function execute()
     {
         $method = $this->getMethod();
 
-        if($this->enableBrowserKit) {
+        if($this->browserKit()) {
             $this->wrapBrowserKit($this->client, new History(), new CookieJar());
             return $this->passToBrowserKit($this->getMethod(), $this->getResource());
         }
@@ -139,12 +152,16 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     }
 
     /**
-     * Run request, and retrieve response contents
+     * Run request, and retrieve response contents if possible
      *
-     * @return \Illuminate\Support\Collection|string
+     * @return Collection|string|Crawler
      */
     public function get()
     {
+        if($this->browserKit()) {
+            return $this->execute();
+        }
+
         return $this->execute()->getContent();
     }
 
