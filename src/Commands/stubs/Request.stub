@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Ivan770\HttpClient\Request;
+use Ivan770\HttpClient\Request\Request;
 
 class DummyClass extends Request
 {
