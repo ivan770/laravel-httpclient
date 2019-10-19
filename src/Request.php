@@ -4,6 +4,8 @@
 namespace Ivan770\HttpClient;
 
 use Ivan770\HttpClient\Contracts\Request as RequestContract;
+use Symfony\Component\BrowserKit\CookieJar;
+use Symfony\Component\BrowserKit\History;
 
 /**
  * @method RequestContract auth(string $type, array|string $credentials) Authentication credentials
@@ -18,7 +20,7 @@ use Ivan770\HttpClient\Contracts\Request as RequestContract;
  *
  * @see Builder
  */
-abstract class Request implements RequestContract
+abstract class Request extends BrowserKitRequest implements RequestContract
 {
     /**
      * HttpClient instance
@@ -58,6 +60,10 @@ abstract class Request implements RequestContract
      */
     protected function getMethod()
     {
+        if($this->enableBrowserKit) {
+            return strtoupper($this->method);
+        }
+
         return strtolower($this->method);
     }
 
@@ -118,11 +124,16 @@ abstract class Request implements RequestContract
     /**
      * Run request
      *
-     * @return Response
+     * @return Response|\Symfony\Component\DomCrawler\Crawler
      */
     public function execute()
     {
         $method = $this->getMethod();
+
+        if($this->enableBrowserKit) {
+            $this->wrapBrowserKit($this->client, new History(), new CookieJar());
+            return $this->passToBrowserKit($this->getMethod(), $this->getResource());
+        }
 
         return $this->client->$method($this->getResource());
     }

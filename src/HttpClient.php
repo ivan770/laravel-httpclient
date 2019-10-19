@@ -61,6 +61,16 @@ class HttpClient
         return $this->builder;
     }
 
+    /**
+     * Get Symfony HttpClient instance
+     *
+     * @return \Symfony\Contracts\HttpClient\HttpClientInterface
+     */
+    public function getSymfonyClient()
+    {
+        return $this->client;
+    }
+
     public function __call($name, $arguments)
     {
         if (static::hasMacro($name)) {

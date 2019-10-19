@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "symfony/http-client": "^4.3",
+        "symfony/browser-kit": "^4.3",
         "illuminate/support": "^5.8|^6.0|^7.0"
     },
     "suggest": {
