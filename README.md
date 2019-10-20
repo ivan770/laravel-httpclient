@@ -3,6 +3,8 @@
 `composer require ivan770/laravel-httpclient`
 ## Usage
 ```php
+// Obtaining instance via Facade alias
+use HttpClient;
 // You can use Facade class to access HttpClient
 use Ivan770\HttpClient\Facade;
 // Or, you can obtain HttpClient instance directly
