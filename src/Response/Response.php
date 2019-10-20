@@ -34,7 +34,7 @@ class Response implements ResponseContract
         if (class_exists(Pipeline::class)) {
             return true;
         }
-        throw new PipelineNotAvailable("Pipeline class cannot be found");
+        throw new PipelineNotAvailable('Pipeline class cannot be found');
     }
 
     protected function getContainer()

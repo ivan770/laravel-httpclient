@@ -33,7 +33,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class HttpClient
 {
-    use InteractsWithEloquent, Requestable, Macroable {
+    use Requestable, Macroable {
         Macroable::__call as macroCall;
     }
 

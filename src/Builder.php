@@ -2,6 +2,8 @@
 
 namespace Ivan770\HttpClient;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 class Builder
 {
     /**
@@ -55,24 +57,24 @@ class Builder
     /**
      * Add HTTP basic auth to request
      *
-     * @param array|string $credentials "Authentication credentials"
+     * @param array|string $credentials Authentication credentials
      * @return $this
      */
     public function authBasic($credentials)
     {
-        $this->applyRequestOptions(["auth_basic" => $credentials]);
+        $this->applyRequestOptions(['auth_basic' => $credentials]);
         return $this;
     }
 
     /**
      * Add Bearer token to request
      *
-     * @param string $credentials "Bearer token"
+     * @param string $credentials Bearer token
      * @return $this
      */
     public function authBearer($credentials)
     {
-        $this->applyRequestOptions(["auth_bearer" => $credentials]);
+        $this->applyRequestOptions(['auth_bearer' => $credentials]);
         return $this;
     }
 
@@ -84,7 +86,7 @@ class Builder
      */
     public function headers($headers)
     {
-        $this->applyRequestOptions(["headers" => $headers]);
+        $this->applyRequestOptions(['headers' => $headers]);
         return $this;
     }
 
@@ -96,7 +98,7 @@ class Builder
      */
     public function body($body)
     {
-        $this->applyRequestOptions(["body" => $body]);
+        $this->applyRequestOptions(['body' => $body]);
         return $this;
     }
 
@@ -108,7 +110,7 @@ class Builder
      */
     public function json($json)
     {
-        $this->applyRequestOptions(["json" => $json]);
+        $this->applyRequestOptions(['json' => $json]);
         return $this;
     }
 
@@ -120,7 +122,7 @@ class Builder
      */
     public function query($query)
     {
-        $this->applyRequestOptions(["query" => $query]);
+        $this->applyRequestOptions(['query' => $query]);
         return $this;
     }
 
@@ -131,7 +133,7 @@ class Builder
      */
     public function withoutRedirects()
     {
-        $this->applyRequestOptions(["max_redirects" => 0]);
+        $this->applyRequestOptions(['max_redirects' => 0]);
         return $this;
     }
 
@@ -144,7 +146,13 @@ class Builder
      */
     public function proxy($proxy = null, $noproxy = null)
     {
-        $this->applyRequestOptions(["proxy" => $proxy, "no_proxy" => $noproxy]);
+        $this->applyRequestOptions(['proxy' => $proxy, 'no_proxy' => $noproxy]);
+        return $this;
+    }
+
+    public function parse(Arrayable $arrayable)
+    {
+        $this->applyRequestOptions(['json' => $arrayable->toArray()]);
         return $this;
     }
 }

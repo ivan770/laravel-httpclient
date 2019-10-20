@@ -118,13 +118,11 @@ $client->authBasic(["username", "password"])->get("https://example.com");
 $client->authBearer("tokenhere")->get("https://example.com");
 ```
 
-### Eloquent interaction
-You can use your Eloquent models as data source for request
+### Arrayable parsing
+You can use any Arrayable class (Eloquent models, collections, etc.) as data source for request
 ```php
 $model = User::find(1);
-$client->setModel($model)->fetchModel()->post("https://example.com");
-// You can also use short variant
-$client->fetchModel($model)->post("https://example.com");
+$client->parse($model)->post("https://example.com");
 ```
 
 ### Data pipelining

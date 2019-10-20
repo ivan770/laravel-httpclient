@@ -62,7 +62,7 @@ class MockResponse implements Response
         if (class_exists(Pipeline::class)) {
             return true;
         }
-        throw new PipelineNotAvailable("Pipeline class cannot be found");
+        throw new PipelineNotAvailable('Pipeline class cannot be found');
     }
 
     /**
@@ -107,7 +107,7 @@ class MockResponse implements Response
             return $this->data;
         }
 
-        throw new DataIsNotCollection("Passed data has to be collection instance");
+        throw new DataIsNotCollection('Passed data has to be collection instance');
     }
 
     /**
