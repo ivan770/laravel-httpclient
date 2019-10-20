@@ -150,6 +150,12 @@ class Builder
         return $this;
     }
 
+    /**
+     * Parse Arrayable class as JSON data source
+     *
+     * @param Arrayable $arrayable Class to parse
+     * @return $this
+     */
     public function parse(Arrayable $arrayable)
     {
         $this->applyRequestOptions(['json' => $arrayable->toArray()]);
