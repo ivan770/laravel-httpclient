@@ -9,7 +9,6 @@
         "illuminate/support": "^5.8|^6.0|^7.0"
     },
     "suggest": {
-        "illuminate/database": "Allows to send request with data from model",
         "illuminate/pipeline": "Allows to send response data through pipelines",
         "illuminate/container": "Required to use pipelines",
         "illuminate/console": "Required to create requests with artisan"
