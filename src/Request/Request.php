@@ -3,11 +3,11 @@
 
 namespace Ivan770\HttpClient\Request;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Contracts\PassToBrowserKit;
 use Ivan770\HttpClient\Contracts\Request as RequestContract;
 use Ivan770\HttpClient\HttpClient;
-use Ivan770\HttpClient\Response\Response;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\DomCrawler\Crawler;
@@ -22,6 +22,7 @@ use Symfony\Component\DomCrawler\Crawler;
  * @method RequestContract query(array $query) Add query string values to request
  * @method RequestContract withoutRedirects() Ignore all redirects for this request
  * @method RequestContract proxy(string $proxy, string $noproxy) Change proxy for this request
+ * @method RequestContract parse(Arrayable $arrayable) Parse Arrayable class as JSON data source
  *
  * @see Builder
  */

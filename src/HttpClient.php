@@ -2,6 +2,7 @@
 
 namespace Ivan770\HttpClient;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\Macroable;
 use Ivan770\HttpClient\Response\Response;
 use Ivan770\HttpClient\Traits\InteractsWithEloquent;
@@ -19,6 +20,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * @method HttpClient query(array $query) Add query string values to request
  * @method HttpClient withoutRedirects() Ignore all redirects for this request
  * @method HttpClient proxy(string $proxy, string $noproxy) Change proxy for this request
+ * @method HttpClient parse(Arrayable $arrayable) Parse Arrayable class as JSON data source
  * @method Response get(string $url, array $arguments = []) Send a GET request
  * @method Response head(string $url, array $arguments = []) Send a HEAD request
  * @method Response post(string $url, array $arguments = []) Send a POST request
