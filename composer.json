@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "HttpClient": "Ivan770\\HttpClient\\HttpClient"
+                "HttpClient": "Ivan770\\HttpClient\\Facade"
             },
             "providers": [
                 "Ivan770\\HttpClient\\ServiceProvider"

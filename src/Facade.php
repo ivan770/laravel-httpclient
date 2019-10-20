@@ -8,6 +8,6 @@ class Facade extends Base
 {
     protected static function getFacadeAccessor()
     {
-        return 'HttpClient';
+        return HttpClient::class;
     }
 }
