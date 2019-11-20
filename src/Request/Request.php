@@ -3,11 +3,15 @@
 
 namespace Ivan770\HttpClient\Request;
 
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Contracts\PassToBrowserKit;
 use Ivan770\HttpClient\Contracts\Request as RequestContract;
+use Ivan770\HttpClient\Exceptions\Cache\BrowserKitCache;
+use Ivan770\HttpClient\Exceptions\Cache\NullRepository;
 use Ivan770\HttpClient\HttpClient;
+use Ivan770\HttpClient\Response\Response;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\DomCrawler\Crawler;
@@ -36,6 +40,13 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     protected $client;
 
     /**
+     * Cache repository instance
+     *
+     * @var Repository
+     */
+    protected $repository;
+
+    /**
      * Request URL
      *
      * @var string
@@ -50,11 +61,20 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     protected $method = 'GET';
 
     /**
-     * @param HttpClient $client
+     * Request cache key
+     *
+     * @var mixed
      */
-    public function __construct(HttpClient $client)
+    protected $cacheKey;
+
+    /**
+     * @param HttpClient $client
+     * @param Repository|null $repository
+     */
+    public function __construct(HttpClient $client, Repository $repository = null)
     {
         $this->client = $client;
+        $this->repository = $repository;
 
         $this->defaultAttach($this->client);
     }
@@ -114,6 +134,16 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     }
 
     /**
+     * Cache key getter
+     *
+     * @return mixed
+     */
+    public function getCacheKey()
+    {
+        return $this->cacheKey;
+    }
+
+    /**
      * Attach builder properties. HttpClient instance is passed into Closure
      *
      * @param \Closure $callback
@@ -140,7 +170,7 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     /**
      * Run request
      *
-     * @return \Ivan770\HttpClient\Response\Response|Crawler
+     * @return Response|Crawler
      */
     public function execute()
     {
@@ -166,6 +196,29 @@ abstract class Request extends BrowserKitRequest implements RequestContract
         }
 
         return $this->execute()->getContent();
+    }
+
+    /**
+     * Get cached response, or run request and save response contents to cache
+     *
+     * @param $ttl
+     * @return mixed
+     * @throws BrowserKitCache
+     * @throws NullRepository
+     */
+    public function remember($ttl)
+    {
+        if($this->browserKit()) {
+            throw new BrowserKitCache();
+        }
+
+        if($this->repository === null) {
+            throw new NullRepository();
+        }
+
+        return $this->repository->remember($this->getCacheKey(), $ttl, function () {
+            return $this->get();
+        });
     }
 
     public function __call($name, $arguments)
