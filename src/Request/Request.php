@@ -70,30 +70,6 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     }
 
     /**
-     * Method getter
-     *
-     * @return string
-     */
-    protected function getMethod()
-    {
-        if($this->browserKit()) {
-            return strtoupper($this->method);
-        }
-
-        return strtolower($this->method);
-    }
-
-    /**
-     * Resource getter
-     *
-     * @return string
-     */
-    protected function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
      * Attach builder properties on execution
      *
      * @param HttpClient $client
@@ -111,6 +87,30 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     protected function tests()
     {
         return [];
+    }
+
+    /**
+     * Method getter
+     *
+     * @return string
+     */
+    public function getMethod()
+    {
+        if($this->browserKit()) {
+            return strtoupper($this->method);
+        }
+
+        return strtolower($this->method);
+    }
+
+    /**
+     * Resource getter
+     *
+     * @return string
+     */
+    public function getResource()
+    {
+        return $this->resource;
     }
 
     /**
