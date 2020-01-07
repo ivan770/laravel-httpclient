@@ -30,6 +30,9 @@ $client->delete("https://example.com");
 ```
 ### Using Request class
 HttpClient provides ability to create "request classes".
+
+`php artisan make:http HttpBinGet`
+
 ```php
 <?php
 
