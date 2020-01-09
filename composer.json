@@ -11,6 +11,7 @@
     "suggest": {
         "illuminate/pipeline": "Allows to send response data through pipelines",
         "illuminate/container": "Required to use pipelines",
+        "illuminate/cache": "Required to use response caching",
         "illuminate/console": "Required to create requests with artisan"
     },
     "autoload": {
