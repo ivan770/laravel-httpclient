@@ -55,7 +55,8 @@ class HttpBinGet extends Request
 	$client->authBearer("test");
     }
 
-    protected function tests(){
+    protected function tests()
+    {
         return [
             "success" => MockResponse::make("Hello World!"),
         ];
