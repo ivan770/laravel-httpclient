@@ -3,6 +3,8 @@
 
 namespace Ivan770\HttpClient\Contracts;
 
+use Closure;
+use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Response\Response;
 
 interface Request
@@ -10,7 +12,7 @@ interface Request
     /**
      * Attach builder properties. HttpClient instance is passed into Closure
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return Request
      */
     public function attach($callback);
@@ -25,7 +27,7 @@ interface Request
     /**
      * Run request, and retrieve response contents
      *
-     * @return \Illuminate\Support\Collection|string
+     * @return Collection|string
      */
     public function get();
 }

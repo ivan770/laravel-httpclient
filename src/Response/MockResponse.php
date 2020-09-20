@@ -2,16 +2,20 @@
 
 namespace Ivan770\HttpClient\Response;
 
-use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
-use Illuminate\Pipeline\Pipeline;
-use Illuminate\Container\Container;
+use Closure;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Contracts\Response;
+use Ivan770\HttpClient\Exceptions\ContainerNotAvailable;
 use Ivan770\HttpClient\Exceptions\DataIsNotCollection;
 use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
+use Ivan770\HttpClient\Traits\Pipeable;
 
 class MockResponse implements Response
 {
+    use Pipeable;
+
     /**
      * @var Collection|string
      */
@@ -28,16 +32,6 @@ class MockResponse implements Response
     protected $headers;
 
     /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * @var Pipeline
-     */
-    protected $pipeline;
-
-    /**
      * MockResponse constructor.
      *
      * @param Collection|string $data
@@ -52,50 +46,6 @@ class MockResponse implements Response
     }
 
     /**
-     * Check if Pipeline is available
-     *
-     * @return bool
-     * @throws PipelineNotAvailable
-     */
-    protected function pipelineAvailable()
-    {
-        if (class_exists(Pipeline::class)) {
-            return true;
-        }
-        throw new PipelineNotAvailable('Pipeline class cannot be found');
-    }
-
-    /**
-     * Get container instance
-     *
-     * @return Container|null
-     */
-    protected function getContainer()
-    {
-        if (is_null($this->container) && class_exists(Container::class)) {
-            $this->container = Container::getInstance();
-        }
-        return $this->container;
-    }
-
-    /**
-     * Get Pipeline instance
-     *
-     * @return Pipeline
-     * @throws PipelineNotAvailable
-     */
-    protected function getPipeline()
-    {
-        if ($this->getContainer()->bound(PipelineContract::class)) {
-            $this->pipeline = $this->getContainer()->make(PipelineContract::class);
-        }
-        if (is_null($this->pipeline) && $this->pipelineAvailable()) {
-            $this->pipeline = new Pipeline($this->getContainer());
-        }
-        return $this->pipeline;
-    }
-
-    /**
      * Get passed collection
      *
      * @return Collection
@@ -107,7 +57,7 @@ class MockResponse implements Response
             return $this->data;
         }
 
-        throw new DataIsNotCollection('Passed data has to be collection instance');
+        throw new DataIsNotCollection();
     }
 
     /**
@@ -140,7 +90,7 @@ class MockResponse implements Response
     /**
      * Pass response content to function
      *
-     * @param \Closure $function Function to call
+     * @param Closure $function Function to call
      * @return mixed
      */
     public function then($function)
@@ -153,6 +103,8 @@ class MockResponse implements Response
      *
      * @return Pipeline
      * @throws PipelineNotAvailable
+     * @throws BindingResolutionException
+     * @throws ContainerNotAvailable
      */
     public function pipeline()
     {

@@ -2,13 +2,12 @@
 
 namespace Ivan770\HttpClient\Exceptions\Cache;
 
-use Exception;
+use Ivan770\HttpClient\Exceptions\ClientException;
 
-class NullRepository extends Exception
+class NullRepository extends ClientException
 {
-    protected $message = "Cache repository was not provided";
-
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    protected function getBaseMessage(): string
+    {
+        return 'Cache repository was not provided';
     }
 }

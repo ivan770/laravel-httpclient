@@ -3,6 +3,7 @@
 
 namespace Ivan770\HttpClient\Request;
 
+use Closure;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -12,17 +13,19 @@ use Ivan770\HttpClient\Exceptions\Cache\BrowserKitCache;
 use Ivan770\HttpClient\Exceptions\Cache\NullRepository;
 use Ivan770\HttpClient\HttpClient;
 use Ivan770\HttpClient\Response\Response;
+use JsonSerializable;
 use Symfony\Component\BrowserKit\CookieJar;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\DomCrawler\Crawler;
+use Traversable;
 
 /**
  * @method RequestContract auth(string $type, array|string $credentials) Authentication credentials
  * @method RequestContract authBasic(array|string $credentials) Add HTTP basic auth to request
  * @method RequestContract authBearer(string $credentials) Add Bearer token to request
  * @method RequestContract headers(array $headers) Add headers to request
- * @method RequestContract body(array|string|resource|\Traversable|\Closure $body) Add body to request
- * @method RequestContract json(array|\JsonSerializable $json) Add JSON to request
+ * @method RequestContract body(array|string|resource|Traversable|Closure $body) Add body to request
+ * @method RequestContract json(array|JsonSerializable $json) Add JSON to request
  * @method RequestContract query(array $query) Add query string values to request
  * @method RequestContract withoutRedirects() Ignore all redirects for this request
  * @method RequestContract proxy(string $proxy, string $noproxy) Change proxy for this request
@@ -146,7 +149,7 @@ abstract class Request extends BrowserKitRequest implements RequestContract
     /**
      * Attach builder properties. HttpClient instance is passed into Closure
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return Request
      */
     public function attach($callback)
@@ -178,7 +181,7 @@ abstract class Request extends BrowserKitRequest implements RequestContract
 
         if($this->browserKit()) {
             $this->wrapBrowserKit($this->client, new History(), new CookieJar());
-            return $this->passToBrowserKit($this->getMethod(), $this->getResource());
+            return $this->passToBrowserKit($method, $this->getResource());
         }
 
         return $this->client->$method($this->getResource());

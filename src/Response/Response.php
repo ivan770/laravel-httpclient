@@ -2,13 +2,15 @@
 
 namespace Ivan770\HttpClient\Response;
 
-use Illuminate\Support\Collection;
-use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
-use Symfony\Component\HttpClient\Exception\JsonException;
-use Illuminate\Container\Container;
+use Closure;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
-use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Collection;
 use Ivan770\HttpClient\Contracts\Response as ResponseContract;
+use Ivan770\HttpClient\Exceptions\ContainerNotAvailable;
+use Ivan770\HttpClient\Exceptions\PipelineNotAvailable;
+use Ivan770\HttpClient\Traits\Pipeable;
+use Symfony\Component\HttpClient\Exception\JsonException;
 
 /**
  * @method int getStatusCode() Get response status code
@@ -18,42 +20,13 @@ use Ivan770\HttpClient\Contracts\Response as ResponseContract;
  */
 class Response implements ResponseContract
 {
+    use Pipeable;
+
     protected $baseResponse;
-
-    protected $pipeline;
-
-    protected $container;
 
     public function __construct($baseResponse)
     {
         $this->baseResponse = $baseResponse;
-    }
-
-    protected function pipelineAvailable()
-    {
-        if (class_exists(Pipeline::class)) {
-            return true;
-        }
-        throw new PipelineNotAvailable('Pipeline class cannot be found');
-    }
-
-    protected function getContainer()
-    {
-        if (is_null($this->container) && class_exists(Container::class)) {
-            $this->container = Container::getInstance();
-        }
-        return $this->container;
-    }
-
-    protected function getPipeline()
-    {
-        if ($this->getContainer()->bound(PipelineContract::class)) {
-            $this->pipeline = $this->getContainer()->make(PipelineContract::class);
-        }
-        if (is_null($this->pipeline) && $this->pipelineAvailable()) {
-            $this->pipeline = new Pipeline($this->getContainer());
-        }
-        return $this->pipeline;
     }
 
     /**
@@ -63,7 +36,7 @@ class Response implements ResponseContract
      */
     public function toCollection()
     {
-        return collect($this->baseResponse->toArray());
+        return Collection::make($this->baseResponse->toArray());
     }
 
     /**
@@ -84,7 +57,7 @@ class Response implements ResponseContract
     /**
      * Pass response content to function
      *
-     * @param \Closure $function Function to call
+     * @param Closure $function Function to call
      * @return mixed
      */
     public function then($function)
@@ -95,7 +68,10 @@ class Response implements ResponseContract
     /**
      * Pass response content to pipeline
      *
-     * @return Pipeline
+     * @return PipelineContract
+     * @throws BindingResolutionException
+     * @throws ContainerNotAvailable
+     * @throws PipelineNotAvailable
      */
     public function pipeline()
     {

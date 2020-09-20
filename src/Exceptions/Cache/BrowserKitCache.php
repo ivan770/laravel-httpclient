@@ -2,13 +2,12 @@
 
 namespace Ivan770\HttpClient\Exceptions\Cache;
 
-use Exception;
+use Ivan770\HttpClient\Exceptions\ClientException;
 
-class BrowserKitCache extends Exception
+class BrowserKitCache extends ClientException
 {
-    protected $message = "BrowserKit caching is not supported";
-
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    protected function getBaseMessage(): string
+    {
+        return 'BrowserKit caching is not supported';
     }
 }

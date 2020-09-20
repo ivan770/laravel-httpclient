@@ -6,7 +6,7 @@
 // Obtaining instance via Facade alias
 use HttpClient;
 // You can use Facade class to access HttpClient
-use Ivan770\HttpClient\Facade;
+use Ivan770\HttpClient\Facades\HttpClient;
 // Or, you can obtain HttpClient instance directly
 use Ivan770\HttpClient\HttpClient;
 public function method(HttpClient $client)

@@ -2,14 +2,16 @@
 
 namespace Ivan770\HttpClient\Contracts;
 
-use Illuminate\Pipeline\Pipeline;
+use Closure;
+use Illuminate\Contracts\Pipeline\Pipeline;
+use Illuminate\Support\Collection;
 
 interface Response
 {
     /**
      * Create collection from response
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function toCollection();
 
@@ -17,14 +19,14 @@ interface Response
      * Get body of response, or collection, if response is JSON-compatible
      *
      * @param bool $throw
-     * @return \Illuminate\Support\Collection|string
+     * @return Collection|string
      */
     public function getContent($throw = true);
 
     /**
      * Pass response content to function
      *
-     * @param \Closure $function Function to call
+     * @param Closure $function Function to call
      */
     public function then($function);
 

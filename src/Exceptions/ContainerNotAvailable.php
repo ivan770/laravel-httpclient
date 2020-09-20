@@ -2,10 +2,10 @@
 
 namespace Ivan770\HttpClient\Exceptions;
 
-class PipelineNotAvailable extends ClientException
+class ContainerNotAvailable extends ClientException
 {
     protected function getBaseMessage(): string
     {
-        return 'Pipeline class not found';
+        return 'Container not available';
     }
 }

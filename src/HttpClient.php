@@ -2,21 +2,24 @@
 
 namespace Ivan770\HttpClient;
 
+use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\Macroable;
 use Ivan770\HttpClient\Response\Response;
 use Ivan770\HttpClient\Traits\InteractsWithEloquent;
 use Ivan770\HttpClient\Traits\Requestable;
+use JsonSerializable;
 use Symfony\Component\HttpClient\HttpClient as Client;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Traversable;
 
 /**
  * @method HttpClient auth(string $type, array|string $credentials) Authentication credentials
  * @method HttpClient authBasic(array|string $credentials) Add HTTP basic auth to request
  * @method HttpClient authBearer(string $credentials) Add Bearer token to request
  * @method HttpClient headers(array $headers) Add headers to request
- * @method HttpClient body(array|string|resource|\Traversable|\Closure $body) Add body to request
- * @method HttpClient json(array|\JsonSerializable $json) Add JSON to request
+ * @method HttpClient body(array|string|resource|Traversable|Closure $body) Add body to request
+ * @method HttpClient json(array|JsonSerializable $json) Add JSON to request
  * @method HttpClient query(array $query) Add query string values to request
  * @method HttpClient withoutRedirects() Ignore all redirects for this request
  * @method HttpClient proxy(string $proxy, string $noproxy) Change proxy for this request

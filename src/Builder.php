@@ -2,7 +2,10 @@
 
 namespace Ivan770\HttpClient;
 
+use Closure;
 use Illuminate\Contracts\Support\Arrayable;
+use JsonSerializable;
+use Traversable;
 
 class Builder
 {
@@ -93,7 +96,7 @@ class Builder
     /**
      * Add body to request
      *
-     * @param array|string|resource|\Traversable|\Closure $body Request body
+     * @param array|string|resource|Traversable|Closure $body Request body
      * @return $this
      */
     public function body($body)
@@ -105,7 +108,7 @@ class Builder
     /**
      * Add JSON to request
      *
-     * @param array|\JsonSerializable $json JSON-compatible value
+     * @param array|JsonSerializable $json JSON-compatible value
      * @return $this
      */
     public function json($json)
@@ -140,11 +143,11 @@ class Builder
     /**
      * Change proxy for this request
      *
-     * @param string $proxy Proxy value for CURLOPT_PROXY
-     * @param string $noproxy Comma-separated list of hosts, that do not require proxy
+     * @param  string  $proxy  Proxy value for CURLOPT_PROXY
+     * @param  string  $noproxy  Comma-separated list of hosts, that do not require proxy
      * @return $this
      */
-    public function proxy($proxy = null, $noproxy = null)
+    public function proxy(string $proxy, string $noproxy): Builder
     {
         $this->applyRequestOptions(['proxy' => $proxy, 'no_proxy' => $noproxy]);
         return $this;

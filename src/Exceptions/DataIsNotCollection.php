@@ -2,15 +2,10 @@
 
 namespace Ivan770\HttpClient\Exceptions;
 
-use Exception;
-
-class DataIsNotCollection extends Exception
+class DataIsNotCollection extends ClientException
 {
-    public function __construct($message, $code = 0, Exception $previous = null) {
-        parent::__construct($message, $code, $previous);
-    }
-
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    protected function getBaseMessage(): string
+    {
+        return 'Passed data has to be collection instance';
     }
 }
