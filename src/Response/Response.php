@@ -50,8 +50,19 @@ class Response implements ResponseContract
         try {
             return $this->toCollection();
         } catch (JsonException $exception) {
-            return $this->baseResponse->getContent($throw);
+            return $this->getRawContent($throw);
         }
+    }
+
+    /**
+     * Get body of response
+     *
+     * @param  bool  $throw
+     * @return string
+     */
+    public function getRawContent($throw = true)
+    {
+        return $this->baseResponse->getContent($throw);
     }
 
     /**
